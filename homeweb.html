@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hang-yuan Cheng | Academic Homepage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #4a6076;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --sidebar-width: 280px;
+            --transition-time: 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0 0 0 var(--sidebar-width);
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        /* 左侧边栏样式 */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 2px 0 15px rgba(0,0,0,0.05);
+            z-index: 999;
+        }
+
+        .profile {
+            margin-bottom: 1.5rem;
+        }
+
+        .name {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin: 0 0 0.3rem 0;
+        }
+
+        .position {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.2rem;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            transition: background-color var(--transition-time);
+        }
+
+        .link-item:hover {
+            background-color: #f1f3f5;
+        }
+
+        .link-item i {
+            width: 25px;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+        }
+
+        /* 导航栏样式 */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-button {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            position: relative;
+            padding: 0.4rem 0;
+            cursor: pointer;
+        }
+
+        .nav-button::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all var(--transition-time);
+        }
+
+        .nav-button:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        /* 内容区域 */
+        section {
+            padding: 5rem 5% 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin: 1.2rem 0 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px solid #eee;
+        }
+
+        .profile-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #444;
+            margin: 0 0 1.5rem;
+            padding: 0.8rem 1rem;
+            background: rgba(245, 245, 245, 0.5);
+            border-radius: 8px;
+        }
+
+        .block {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        /* 教育信息样式 */
+        .education-item {
+            margin: 1.2rem 0;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .degree-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.4rem;
+        }
+
+        .degree {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .time {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .institution {
+            font-size: 1rem;
+            color: #444;
+            margin-bottom: 0.4rem;
+        }
+
+        .advisor {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            body {
+                padding-left: 0;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                padding: 1.5rem;
+            }
+
+            .nav-container {
+                position: static;
+                padding: 1rem;
+                box-shadow: none;
+            }
+
+            .nav-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            section {
+                padding: 3rem 5% 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+                margin: 1rem 0 0.6rem;
+            }
+
+            .profile-description {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="profile">
+            <h1 class="name">Hang-yuan Cheng</h1>
+            <p class="position">Ph.D Student</p>
+            <div class="links">
+                <a href="https://github.com/Hangyuan-Cheng" class="link-item" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://figshare.com/authors/Hang-yuan_Cheng/21003110" class="link-item" target="_blank" rel="noopener noreferrer">
+                    <i class="fas fa-share-alt"></i>
+                    <span>Figshare</span>
+                </a>
+                <a href="https://orcid.org/0000-0001-6346-7052" class="link-item" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-orcid"></i>
+                    <span>ORCID</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <nav class="nav-container">
+        <div class="nav-buttons">
+            <a href="#education" class="nav-button">Education</a>
+            <a href="#publications" class="nav-button">Publications</a>
+            <a href="#research" class="nav-button">Research</a>
+        </div>
+    </nav>
+
+    <main>
+        <section id="education" class="visible">
+            <div class="profile-description">
+                I am a Phd Student at China Agricultural University, working under the supervision of Professor Weilong Guo. My research focuses on wheat pan-genome analysis, structural variation identification, and their association with important agronomic traits. I specialize in computational genomics, bioinformatics data analysis, and comparative genomics.
+            </div>
+
+            <h2 class="section-title">Education</h2>
+            <div class="block">
+                <div class="education-item">
+                    <div class="degree-line">
+                        <span class="degree">Ph.D in Genetics</span>
+                        <span class="time">2021-2027</span>
+                    </div>
+                    <div class="institution">Institute of Genetics and Developmental Biology, Chinese Academy of Sciences</div>
+                    <div class="advisor">Advisor: Prof. Jian-Min Zhou</div>
+                </div>
+
+                <div class="education-item">
+                    <div class="degree-line">
+                        <span class="degree">B.S in Agronomy</span>
+                        <span class="time">2017-2021</span>
+                    </div>
+                    <div class="institution">China Agricultural University</div>
+                    <div class="advisor">Advisor: Prof. Yu-yi Zhou</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications">
+            <h2 class="section-title">Publications</h2>
+            <div class="block">
+                <p class="publication">
+                    An annotated near-complete sequence assembly of the Magnaporthe oryzae 70-15 reference genome.
+                    <strong>Hang-yuan Cheng#</strong>, Li-ping Jiang#, Yue Fei, Fei Lu, Shengwei Ma. 
+                    <strong><i>Scientific Data</i></strong>. (2025). DOI: 10.1038/s41597-025-05116-3
+                </p>
+            </div>
+            <div class="block">
+                <p class="publication">
+                    A widespread plant defense compound disarms bacterial type III injectisome assembly.
+                    Pei Miao#, Haijun Wang#, Wei Wang#,  Zhengdong Wang, Han Ke, <strong>Hangyuan Cheng</strong>, Jinjing Ni, Jingnan Liang, Yu-Feng Yao, Jizong Wang, Jian-Min Zhou, Xiaoguang Lei.
+                    <strong><i>Science</i></strong>. (2025). DOI: 10.1126/science.ads0377
+                </p>
+            </div>
+            <div class="block">
+                <p class="publication">
+                    New insight into Ca2+‐permeable channel in plant immunity. 
+                    Wei Wang, <strong>Hang-Yuan Cheng</strong>, Jian‐Min Zhou. 
+                    <strong><i>Journal of Integrative Plant Biology</i></strong>. (2024). DOI: 10.1111/jipb.13613
+                </p>
+            </div>
+        </section>
+
+        <section id="research">
+            <h2 class="section-title">Research Focus</h2>
+            <div class="block">
+                <ul>
+                    <li>Crop domestication</li>
+                    <li>Plant immunity</li>
+                    <li>Artificial intelligence and Bioinformatics</li>
+                    <li>Integrative biology</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="activities">
+            <h2 class="section-title">Academic activities</h2>
+            <div class="block">
+                <p class="publication">
+                    International Student Workshop 2023. UC Davis, California.
+                    <strong>Oral presentation, Poster</strong>. 
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 平滑滚动函数
+        function smoothScroll(target) {
+            const element = document.querySelector(target);
+            if (element) {
+                const offset = 90; // 根据导航栏高度调整
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = element.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
+
+        // 导航按钮点击事件
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = button.getAttribute('href');
+                if (target) {
+                    history.pushState(null, null, target);
+                    smoothScroll(target);
+                }
+            });
+        });
+
+        // 页面加载渐变
+        document.body.style.opacity = 0;
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.8s ease';
+                document.body.style.opacity = 1;
+            }, 100);
+        });
+
+        // 滚动触发展示动画
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach((section) => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
