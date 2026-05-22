@@ -41,28 +41,61 @@
             background: rgba(255, 255, 255, 0.98);
             box-shadow: 2px 0 15px rgba(0,0,0,0.05);
             z-index: 999;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .profile {
-            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
         }
 
         .name {
             font-size: 2.2rem;
             color: var(--primary-color);
             margin: 0 0 0.3rem 0;
+            line-height: 1.2;
         }
 
         .position {
             font-size: 1rem;
             color: var(--secondary-color);
-            margin-bottom: 1.2rem;
+            margin: 0 0 1rem 0;
+        }
+
+        /* 研究方向标签样式 */
+        .research-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            background-color: #eef2f7;
+            color: var(--secondary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid #dce4ec;
+            font-weight: 500;
+            transition: all var(--transition-time);
+        }
+
+        .tag:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
         }
 
         .links {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            border-top: 1px solid #eee;
+            padding-top: 1.2rem;
         }
 
         .link-item {
@@ -73,6 +106,8 @@
             padding: 0.5rem 0.8rem;
             border-radius: 6px;
             transition: background-color var(--transition-time);
+            font-size: 0.95rem;
+            cursor: pointer;
         }
 
         .link-item:hover {
@@ -83,6 +118,35 @@
             width: 25px;
             font-size: 1.1rem;
             color: var(--accent-color);
+            text-align: center;
+        }
+
+        /* 现代轻量级弹窗提示样式 */
+        .toast-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(44, 62, 80, 0.96);
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            letter-spacing: 0.3px;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            visibility: visible;
         }
 
         /* 导航栏样式 */
@@ -128,7 +192,7 @@
 
         /* 内容区域 */
         section {
-            padding: 5rem 5% 2rem;
+            padding: 6rem 5% 2rem;
             max-width: 800px;
             margin: 0 auto;
             opacity: 0;
@@ -174,6 +238,11 @@
             border-bottom: 1px solid #eee;
         }
 
+        .education-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
         .degree-line {
             display: flex;
             justify-content: space-between;
@@ -202,6 +271,60 @@
             font-size: 0.9rem;
             color: #666;
             font-style: italic;
+        }
+
+        /* 论文列表样式 */
+        .publication-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 20px;
+        }
+
+        .publication-item {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .publication-item > * {
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .authors {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        .journal {
+            font-size: 0.95rem;
+            color: #27ae60;
+        }
+
+        .doi {
+            font-size: 0.9rem;
+        }
+
+        .journal b {
+            font-style: italic;
+            font-weight: 700;
+        }
+
+        .doi a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .doi a:hover {
+            text-decoration: underline;
         }
 
         /* 响应式设计 */
@@ -238,107 +361,38 @@
                 font-size: 1.6rem;
                 margin: 1rem 0 0.6rem;
             }
-
-            .profile-description {
-                margin-bottom: 1rem;
-            }
         }
-                .publication-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 20px;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .publication-item {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .publication-item > * {
-            margin: 0.5rem 0;
-            line-height: 1.4;
-        }
-
-        .title {
-            font-size: 1.2em;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .authors {
-            font-size: 1.1em;
-            color: #7f8c8d;
-        }
-
-        .journal {
-            font-size: 1em;
-            color: #27ae60;
-        }
-
-        .doi {
-            font-size: 0.9em;
-        }
-
-        .journal b {
-            font-style: italic;
-            font-weight: 700;
-        }
-
-        .doi a {
-            color: #2980b9;
-            text-decoration: none;
-        }
-
-        .doi a:hover {
-            text-decoration: underline;
-        }
-
-        /* 地理位置信息 */
-        .location {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            cursor: default;
-            gap: 0.5rem;
-        }
-
-        .location:hover {
-            background: rgba(233, 69, 96, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.2);
-        }
-
-        .location-icon {
-            font-size: 16px;
-        }
-
-        .location-text {
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
     </style>
 </head>
 <body>
+    <div id="toastNotification" class="toast-notification">
+        <i class="fas fa-check-circle" style="color: #2ecc71;"></i>
+        Email address copied: hangyuan@genetics.ac.cn
+    </div>
+
     <aside class="sidebar">
         <div class="profile">
             <h1 class="name">Hang-yuan Cheng</h1>
             <p class="position">Ph.D Student</p>
 
-            <!-- 地理位置 -->
-            <div class="location">
-                <span class="location-icon">📍</span>
-                <span class="location-text">Beijing, China</span>
+            <div class="research-tags">
+                <span class="tag">Crop Domestication</span>
+                <span class="tag">Plant Immunity</span>
+                <span class="tag">AI & Bioinformatics</span>
+                <span class="tag">Integrative Biology</span>
             </div>
 
             <div class="links">
+                <div class="link-item" style="cursor: default;">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Beijing, China</span>
+                </div>
+                
+                <div class="link-item" id="contactBtn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </div>
+
                 <a href="https://github.com/Hangyuan-Cheng" class="link-item" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-github"></i>
                     <span>GitHub</span>
@@ -359,7 +413,7 @@
         <div class="nav-buttons">
             <a href="#education" class="nav-button">Education</a>
             <a href="#publications" class="nav-button">Publications</a>
-            <a href="#research" class="nav-button">Research</a>
+            <a href="#activities" class="nav-button">Activities</a>
         </div>
     </nav>
 
@@ -450,47 +504,55 @@
             </div>
 
             <div class="publication-item">
-                <div class="title">Giving maize an excited start – Effects of dopamine on maize germination</div>
+                <div class="title">Giving maize an excited start - Effects of dopamine on maize germination</div>
                 <div class="authors"><b style="color: #536370;">Hang-yuan Cheng</b>, Xing WANG, Tian-yu FENG, Chuan-xi PENG, Wei WANG, Mu-yu YANG, Yu-yi ZHOU</div>
                 <div class="journal"><b>Journal of Integrative Agriculture</b> (2020)</div>
                 <div class="doi">DOI: <a href="https://doi.org/10.1016/s2095-3119(20)63252-x">10.1038/s41591-023-02329-0</a></div>
             </div>
-
-        </section>
-
-        <section id="research">
-            <h2 class="section-title">Research Focus</h2>
-            <div class="block">
-                <ul>
-                    <li>Crop domestication</li>
-                    <li>Plant immunity</li>
-                    <li>Artificial intelligence and Bioinformatics</li>
-                    <li>Integrative biology</li>
-                </ul>
-            </div>
         </section>
 
         <section id="activities">
-            <h2 class="section-title">Academic activities</h2>
+            <h2 class="section-title">Academic Activities</h2>
             <div class="publication-item">
                 <div class="title">Symposium of Plant Immunity and Crop Disease Resistance.</div>
                 <div class="authors">Sanya, Hainan, China | October 2025</div>
-                    <strong>Poster</strong> 
+                <strong style="color: var(--accent-color);">Poster</strong> 
             </div>
             <div class="publication-item">
                 <div class="title">International Student Workshop.</div>
                 <div class="authors">Davis, California, USA | November 2023</div>
-                    <strong>Oral presentation, Poster</strong> 
+                <strong style="color: var(--accent-color);">Oral presentation, Poster</strong> 
             </div>
         </section>
     </main>
 
     <script>
+        // 核心优化：复制邮箱并展示英文提示弹窗
+        document.getElementById('contactBtn').addEventListener('click', function() {
+            const email = 'hangyuan@genetics.ac.cn';
+            
+            // 使用现代 Clipboard API 写入剪贴板
+            navigator.clipboard.writeText(email).then(() => {
+                const toast = document.getElementById('toastNotification');
+                
+                // 激活弹窗显示
+                toast.classList.add('show');
+                
+                // 2秒后自动消失
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                // 降级兼容极少数旧版浏览器
+                console.error('Failed to copy: ', err);
+            });
+        });
+
         // 平滑滚动函数
         function smoothScroll(target) {
             const element = document.querySelector(target);
             if (element) {
-                const offset = 90; // 根据导航栏高度调整
+                const offset = 90; 
                 const bodyRect = document.body.getBoundingClientRect().top;
                 const elementRect = element.getBoundingClientRect().top;
                 const elementPosition = elementRect - bodyRect;
