@@ -12,6 +12,7 @@
             --accent-color: #3498db;
             --text-color: #333;
             --sidebar-width: 280px;
+            --navbar-height: 60px;
             --transition-time: 0.3s;
         }
 
@@ -21,10 +22,10 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
-            padding: 0 0 0 var(--sidebar-width);
+            padding: var(--navbar-height) 0 0 var(--sidebar-width); /* 顶部预留导航栏高度，左侧预留边栏宽度 */
             background-color: #f8f9fa;
             color: var(--text-color);
             animation: fadeIn 0.8s ease-in;
@@ -37,48 +38,74 @@
             top: 0;
             width: var(--sidebar-width);
             height: 100vh;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.98);
+            padding: 2rem 1.5rem;
+            background: #ffffff;
             box-shadow: 2px 0 15px rgba(0,0,0,0.05);
-            z-index: 999;
+            z-index: 1001; /* 确保层级高于顶部常驻导航栏 */
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.2rem;
+            overflow-y: auto;
+        }
+
+        /* 预留照片位置样式 */
+        .avatar-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 0.5rem auto;
+            border-radius: 50%;
+            background-color: #eef2f7;
+            border: 3px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .profile {
             display: flex;
             flex-direction: column;
+            text-align: center; /* 头像与名字区域整体居中 */
         }
 
         .name {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: var(--primary-color);
             margin: 0 0 0.3rem 0;
             line-height: 1.2;
         }
 
         .position {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--secondary-color);
-            margin: 0 0 1rem 0;
+            margin: 0 0 1.2rem 0;
         }
 
-        /* 研究方向标签样式 */
+        /* 研究方向标签样式（全面改为圆角矩形） */
         .research-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.4rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
+            justify-content: center;
         }
 
         .tag {
             font-size: 0.75rem;
             background-color: #eef2f7;
             color: var(--secondary-color);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px; /* 圆角矩形效果 */
             border: 1px solid #dce4ec;
             font-weight: 500;
             transition: all var(--transition-time);
@@ -90,17 +117,23 @@
             border-color: var(--accent-color);
         }
 
+        /* 修正 1：左侧导航栏包裹容器整体居中，但限制宽度 */
         .links {
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            align-items: flex-start; /* 关键：子项内部保持左对齐 */
+            margin: 0 auto;         /* 关键：使包裹容器整体在侧边栏横向居中 */
+            width: 160px;            /* 给定一个固定或适合的宽度，使整体居中且对齐好看 */
+            gap: 0.3rem;
             border-top: 1px solid #eee;
-            padding-top: 1.2rem;
+            padding-top: 1rem;
         }
 
+        /* 修正 2：子项内部元素调整为左对齐 */
         .link-item {
             display: flex;
             align-items: center;
+            justify-content: flex-start; /* 关键：图标和文字左对齐 */
             color: var(--primary-color);
             text-decoration: none;
             padding: 0.5rem 0.8rem;
@@ -108,6 +141,8 @@
             transition: background-color var(--transition-time);
             font-size: 0.95rem;
             cursor: pointer;
+            width: 100%;                 /* 铺满父容器宽度，方便悬浮背景统一 */
+            box-sizing: border-box;
         }
 
         .link-item:hover {
@@ -118,7 +153,55 @@
             width: 25px;
             font-size: 1.1rem;
             color: var(--accent-color);
-            text-align: center;
+            text-align: left;           /* 图标本身左对齐 */
+            margin-right: 0.3rem;
+        }
+
+        /* 右侧标签所在导航栏（横置常驻顶端） */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: var(--sidebar-width); /* 从左侧边栏右侧开始 */
+            right: 0;
+            height: var(--navbar-height);
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            box-sizing: border-box;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-button {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            text-decoration: none;
+            position: relative;
+            padding: 0.4rem 0;
+            cursor: pointer;
+        }
+
+        .nav-button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all var(--transition-time);
+        }
+
+        .nav-button:hover::after {
+            width: 100%;
+            left: 0;
         }
 
         /* 现代轻量级弹窗提示样式 */
@@ -134,7 +217,7 @@
             font-size: 0.95rem;
             font-weight: 500;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            z-index: 1001;
+            z-index: 1002;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -149,55 +232,19 @@
             visibility: visible;
         }
 
-        /* 导航栏样式 */
-        .nav-container {
-            position: fixed;
-            top: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .nav-button {
-            font-size: 1.1rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            position: relative;
-            padding: 0.4rem 0;
-            cursor: pointer;
-        }
-
-        .nav-button::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: all var(--transition-time);
-        }
-
-        .nav-button:hover::after {
-            width: 100%;
-            left: 0;
-        }
-
         /* 内容区域 */
         section {
-            padding: 6rem 5% 2rem;
-            max-width: 800px;
+            padding: 2rem 5% 2rem;
+            max-width: 850px;
             margin: 0 auto;
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.6s ease;
+        }
+
+        /* 为第一个section增加额外的顶部内边距，防止被顶端常驻导航栏遮挡 */
+        section:first-of-type {
+            padding-top: 3rem;
         }
 
         section.visible {
@@ -206,9 +253,9 @@
         }
 
         .section-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--primary-color);
-            margin: 1.2rem 0 0.8rem;
+            margin: 1.5rem 0 1rem;
             padding-bottom: 0.4rem;
             border-bottom: 2px solid #eee;
         }
@@ -217,10 +264,12 @@
             font-size: 1rem;
             line-height: 1.7;
             color: #444;
-            margin: 0 0 1.5rem;
-            padding: 0.8rem 1rem;
-            background: rgba(245, 245, 245, 0.5);
+            margin: 0;
+            padding: 1.2rem 1.5rem;
+            background: #ffffff;
             border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+            border-left: 4px solid var(--accent-color);
         }
 
         .block {
@@ -228,7 +277,7 @@
             padding: 1.5rem;
             margin: 1rem 0;
             border-radius: 8px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
         }
 
         /* 教育信息样式 */
@@ -243,6 +292,10 @@
             padding-bottom: 0;
         }
 
+        .education-item:first-child {
+            padding-top: 0;
+        }
+
         .degree-line {
             display: flex;
             justify-content: space-between;
@@ -251,13 +304,13 @@
         }
 
         .degree {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 600;
             color: var(--primary-color);
         }
 
         .time {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #666;
         }
 
@@ -274,33 +327,27 @@
         }
 
         /* 论文列表样式 */
-        .publication-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 20px;
-        }
-
         .publication-item {
             background: white;
             border-radius: 8px;
             padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            margin-bottom: 1.2rem;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
         }
 
         .publication-item > * {
-            margin: 0.5rem 0;
+            margin: 0.4rem 0;
             line-height: 1.4;
         }
 
         .title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #2c3e50;
         }
 
         .authors {
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #7f8c8d;
         }
 
@@ -310,7 +357,7 @@
         }
 
         .doi {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .journal b {
@@ -331,6 +378,7 @@
         @media (max-width: 992px) {
             body {
                 padding-left: 0;
+                padding-top: var(--navbar-height);
             }
 
             .sidebar {
@@ -338,28 +386,34 @@
                 width: 100%;
                 height: auto;
                 box-shadow: none;
-                padding: 1.5rem;
+                padding: 2rem 1.5rem 1rem;
+                border-bottom: 1px solid #eee;
             }
 
             .nav-container {
-                position: static;
-                padding: 1rem;
-                box-shadow: none;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                justify-content: center;
+                padding: 0 1rem;
+                border-bottom: 1px solid #eee;
             }
 
             .nav-buttons {
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 1rem;
+                gap: 1.5rem;
             }
 
             section {
-                padding: 3rem 5% 1.5rem;
+                padding: 2rem 5% 1rem;
+            }
+
+            section:first-of-type {
+                padding-top: 2rem;
             }
 
             .section-title {
-                font-size: 1.6rem;
-                margin: 1rem 0 0.6rem;
+                font-size: 1.4rem;
             }
         }
     </style>
@@ -370,7 +424,13 @@
         Email address copied: hangyuan@genetics.ac.cn
     </div>
 
+    <!-- 左侧边栏 -->
     <aside class="sidebar">
+        <!-- 修正 3：已将原占位符文字替换为您的真实照片链接 -->
+        <div class="avatar-container">
+            <img src="https://mmbiz.qpic.cn/mmbiz_jpg/B6MqGWIZ4TfcibAW9LBabcTDA6TXaRBvsSufNEc7b4WfrAjMiaRvfsovPibw2wUdObxmlaAADYmPnIlcdKdBVJxcg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1#imgIndex=1" alt="Hang-yuan Cheng">
+        </div>
+
         <div class="profile">
             <h1 class="name">Hang-yuan Cheng</h1>
             <p class="position">Ph.D Student</p>
@@ -382,6 +442,7 @@
                 <span class="tag">Integrative Biology</span>
             </div>
 
+            <!-- 下方联系方式等文字和图标整体居中，内部项左对齐 -->
             <div class="links">
                 <div class="link-item" style="cursor: default;">
                     <i class="fas fa-map-marker-alt"></i>
@@ -409,8 +470,10 @@
         </div>
     </aside>
 
+    <!-- 顶部导航栏 -->
     <nav class="nav-container">
         <div class="nav-buttons">
+            <a href="#introduction" class="nav-button">Introduction</a>
             <a href="#education" class="nav-button">Education</a>
             <a href="#publications" class="nav-button">Publications</a>
             <a href="#activities" class="nav-button">Activities</a>
@@ -418,11 +481,15 @@
     </nav>
 
     <main>
-        <section id="education" class="visible">
+        <!-- Introduction 栏目 -->
+        <section id="introduction" class="visible">
             <div class="profile-description">
                 I am a PhD student in Genetics at Professor Jian-Min Zhou's laboratory, where I investigate the evolutionary interplay between plant immunity and crop domestication. My research integrates pan-genome architectures, NLRome profiling, and functional genomics to decode evolutionary trajectories of disease resistance mechanisms across major crops.
             </div>
+        </section>
 
+        <!-- Education 栏目 -->
+        <section id="education">
             <h2 class="section-title">Education</h2>
             <div class="block">
                 <div class="education-item">
@@ -445,72 +512,74 @@
             </div>
         </section>
 
+        <!-- Publications 栏目 -->
         <section id="publications">
             <h2 class="section-title">Publications</h2>
             <div class="publication-item">
                 <div class="title">An annotated near-complete sequence assembly of the <i>Magnaporthe oryzae</i> 70-15 reference genome</div>
                 <div class="authors"><b style="color: #536370;">Hang-yuan Cheng<sup>#</sup></b>, Li-ping Jiang<sup>#</sup>, Yue Fei, Fei Lu, Shengwei Ma</div>
                 <div class="journal"><b>Scientific Data</b> (2025)</div>
-                <div class="doi">DOI: <a href="https://doi.org/10.1038/s41597-025-05116-3">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="https://doi.org/10.1038/s41597-025-05116-3">10.1038/s41597-025-05116-3</a></div>
             </div>
 
             <div class="publication-item">
                 <div class="title">A widespread plant defense compound disarms bacterial type III injectisome assembly</div>
                 <div class="authors">Pei Miao<sup>#</sup>, Haijun Wang<sup>#</sup>, Wei Wang<sup>#</sup>, Zhengdong Wang, Han Ke, <b style="color: #536370;">Hangyuan Cheng</b>, Jinjing Ni, Jingnan Liang, Yu-Feng Yao, Jizong Wang, Jian-Min Zhou, Xiaoguang Lei</div>
                 <div class="journal"><b>Science</b> (2025)</div>
-                <div class="doi">DOI: <a href="https://doi.org/10.1126/science.ads0377">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="https://doi.org/10.1126/science.ads0377">10.1126/science.ads0377</a></div>
             </div>
 
             <div class="publication-item">
                 <div class="title">New insight into Ca<sup>2+</sup>-permeable channel in plant immunity</div>
                 <div class="authors">Wei Wang, <b style="color: #536370;">Hang-Yuan Cheng</b>, Jian-Min Zhou</div>
                 <div class="journal"><b>Journal of Integrative Plant Biology</b> (2024)</div>
-                <div class="doi">DOI: <a href="https://doi.org/10.1111/jipb.13613">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="https://doi.org/10.1111/jipb.13613">10.1111/jipb.13613</a></div>
             </div>
 
             <div class="publication-item">
                 <div class="title">Interkingdom Hormonal Regulations between Plants and Animals Provide New Insight into Food Safety</div>
                 <div class="authors"><b style="color: #536370;">Hang-yuan Cheng</b>, Wen Wang, Wei Wang, Mu-yu Yang, Yu-yi Zhou</div>
                 <div class="journal"><b>Journal of Agricultural and Food Chemistry</b> (2024)</div>
-                <div class="doi">DOI: <a href="https://doi.org/10.1021/acs.jafc.3c04712">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="https://doi.org/10.1021/acs.jafc.3c04712">10.1021/acs.jafc.3c04712</a></div>
             </div>            
             
             <div class="publication-item">
                 <div class="title">WeiTsing, a pericycle-expressed ion channel, safeguards the stele to confer clubroot resistance</div>
                 <div class="authors">Wei Wang<sup>#</sup>, Li Qin<sup>#</sup>, Wenjing Zhang<sup>#</sup>, Linghui Tang<sup>#</sup>, Chao Zhang, Xiaojing Dong, Pei Miao, Meng Shen, Huilong Du, <b style="color: #536370;">Hangyuan Cheng</b>, Ke Wang, Xiangyun Zhang, Min Su, Hongwei Lu, Chang Li, Qiang Gao, Xiaojuan Zhang, Yun Huang, Chengzhi Liang, Jian-Min Zhou, Yu-hang Chen</div>
                 <div class="journal"><b>Cell</b> (2023)</div>
-                <div class="doi">DOI: <a href="http://dx.doi.org/10.1016/j.cell.2023.05.023">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="http://dx.doi.org/10.1016/j.cell.2023.05.023">10.1016/j.cell.2023.05.023</a></div>
             </div>            
             
             <div class="publication-item">
                 <div class="title">SHOU4/4L link cell wall cellulose synthesis to pattern-triggered immunity</div>
                 <div class="authors">Weibing Wang<sup>#</sup>, Yue Fei<sup>#</sup>, Yongjin Wang<sup>#</sup>, Beibei Song, Lin Li, Wenjing Zhang, <b style="color: #536370;">Hangyuan Cheng</b>, Xiaojuan Zhang, She Chen, Jian-Min Zhou</div>
                 <div class="journal"><b>New Phytologist</b> (2023)</div>
-                <div class="doi">DOI: <a href="https://doi.org/10.1111/nph.18829">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="https://doi.org/10.1111/nph.18829">10.1111/nph.18829</a></div>
             </div>
 
             <div class="publication-item">
                 <div class="title">A surface-receptor-coupled G protein regulates plant immunity through nuclear protein kinases</div>
                 <div class="authors">Miaomiao Ma, Wei Wang, Yue Fei, <b style="color: #536370;">Hang-yuan Cheng</b>, Beibei Song, Zhaoyang Zhou, Yan Zhao, Xiaojuan Zhang, Lin Li, She Chen, Jizong Wang, Xiangxiu Liang, Jian-Min Zhou</div>
                 <div class="journal"><b>Cell Host & Microbe</b> (2022)</div>
-                <div class="doi">DOI: <a href="http://dx.doi.org/10.1016/j.chom.2022.09.012">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="http://dx.doi.org/10.1016/j.chom.2022.09.012">10.1016/j.chom.2022.09.012</a></div>
             </div>
 
             <div class="publication-item">
                 <div class="title">Responses of greenhouse gas emissions to residue returning in China's croplands and influential factors: A meta-analysis</div>
                 <div class="authors">Xu-Dong Wang, Cong He, <b style="color: #536370;">Hang-yuan Cheng</b>, Bing-Yang Liu, Shuai-Shuai Li, Qi Wang, Yang Liu, Xin Zhao, Hai-Lin Zhang</div>
                 <div class="journal"><b>Journal of Environmental Management</b> (2021)</div>
-                <div class="doi">DOI: <a href="https://doi.org/10.1016/j.jenvman.2021.112486">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="https://doi.org/10.1016/j.jenvman.2021.112486">10.1016/j.jenvman.2021.112486</a></div>
             </div>
 
             <div class="publication-item">
                 <div class="title">Giving maize an excited start - Effects of dopamine on maize germination</div>
                 <div class="authors"><b style="color: #536370;">Hang-yuan Cheng</b>, Xing WANG, Tian-yu FENG, Chuan-xi PENG, Wei WANG, Mu-yu YANG, Yu-yi ZHOU</div>
                 <div class="journal"><b>Journal of Integrative Agriculture</b> (2020)</div>
-                <div class="doi">DOI: <a href="https://doi.org/10.1016/s2095-3119(20)63252-x">10.1038/s41591-023-02329-0</a></div>
+                <div class="doi">DOI: <a href="https://doi.org/10.1016/s2095-3119(20)63252-x">10.1016/s2095-3119(20)63252-x</a></div>
             </div>
         </section>
 
+        <!-- Activities 栏目 -->
         <section id="activities">
             <h2 class="section-title">Academic Activities</h2>
             <div class="publication-item">
@@ -527,23 +596,16 @@
     </main>
 
     <script>
-        // 核心优化：复制邮箱并展示英文提示弹窗
+        // 复制邮箱功能
         document.getElementById('contactBtn').addEventListener('click', function() {
             const email = 'hangyuan@genetics.ac.cn';
-            
-            // 使用现代 Clipboard API 写入剪贴板
             navigator.clipboard.writeText(email).then(() => {
                 const toast = document.getElementById('toastNotification');
-                
-                // 激活弹窗显示
                 toast.classList.add('show');
-                
-                // 2秒后自动消失
                 setTimeout(() => {
                     toast.classList.remove('show');
                 }, 2000);
             }).catch(err => {
-                // 降级兼容极少数旧版浏览器
                 console.error('Failed to copy: ', err);
             });
         });
@@ -552,7 +614,7 @@
         function smoothScroll(target) {
             const element = document.querySelector(target);
             if (element) {
-                const offset = 90; 
+                const offset = 80; 
                 const bodyRect = document.body.getBoundingClientRect().top;
                 const elementRect = element.getBoundingClientRect().top;
                 const elementPosition = elementRect - bodyRect;
@@ -566,7 +628,7 @@
         }
 
         // 导航按钮点击事件
-        document.querySelectorAll('.nav-button').forEach(button => {
+        document.querySelectorAll('.nav-buttons .nav-button').forEach(button => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 const target = button.getAttribute('href');
@@ -577,7 +639,7 @@
             });
         });
 
-        // 页面加载渐变
+        // 页面淡入效果
         document.body.style.opacity = 0;
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
@@ -593,7 +655,7 @@
                     entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.05 });
 
         document.querySelectorAll('section').forEach((section) => {
             observer.observe(section);
