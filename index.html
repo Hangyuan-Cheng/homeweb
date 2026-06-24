@@ -117,7 +117,7 @@
             border-color: var(--accent-color);
         }
 
-        /* 修正 1：左侧导航栏包裹容器整体居中，但限制宽度 */
+        /* 左侧导航栏包裹容器整体居中，但限制宽度 */
         .links {
             display: flex;
             flex-direction: column;
@@ -129,7 +129,7 @@
             padding-top: 1rem;
         }
 
-        /* 修正 2：子项内部元素调整为左对齐 */
+        /* 子项内部元素调整为左对齐 */
         .link-item {
             display: flex;
             align-items: center;
@@ -157,7 +157,7 @@
             margin-right: 0.3rem;
         }
 
-        /* 右侧标签所在导航栏（横置常驻顶端） */
+        /* 右侧标签所在导航栏（横置常驻顶端） - 已修改 justify-content 为 center */
         .nav-container {
             position: fixed;
             top: 0;
@@ -169,17 +169,18 @@
             z-index: 1000;
             display: flex;
             align-items: center;
+            justify-content: center;   /* 【核心修改】使内部的按钮组整体居中 */
             padding: 0 2rem;
             box-sizing: border-box;
         }
 
         .nav-buttons {
             display: flex;
-            gap: 2rem;
+            gap: 2.3rem;
         }
 
         .nav-button {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: 500;
             color: var(--primary-color);
             text-decoration: none;
@@ -424,9 +425,7 @@
         Email address copied: hangyuan@genetics.ac.cn
     </div>
 
-    <!-- 左侧边栏 -->
     <aside class="sidebar">
-        <!-- 修正 3：已将原占位符文字替换为您的真实照片链接 -->
         <div class="avatar-container">
             <img src="https://hangyuan-cheng.github.io/homeweb/images/chy.jpg" alt="Hang-yuan Cheng">
         </div>
@@ -442,7 +441,6 @@
                 <span class="tag">Integrative Biology</span>
             </div>
 
-            <!-- 下方联系方式等文字和图标整体居中，内部项左对齐 -->
             <div class="links">
                 <div class="link-item" style="cursor: default;">
                     <i class="fas fa-map-marker-alt"></i>
@@ -470,7 +468,6 @@
         </div>
     </aside>
 
-    <!-- 顶部导航栏 -->
     <nav class="nav-container">
         <div class="nav-buttons">
             <a href="#introduction" class="nav-button">Introduction</a>
@@ -481,14 +478,12 @@
     </nav>
 
     <main>
-        <!-- Introduction 栏目 -->
         <section id="introduction" class="visible">
             <div class="profile-description">
                 I am a PhD student in Genetics at Professor Jian-Min Zhou's laboratory, where I investigate the evolutionary interplay between plant immunity and crop domestication. My research integrates pan-genome architectures, NLRome profiling, and functional genomics to decode evolutionary trajectories of disease resistance mechanisms across major crops.
             </div>
         </section>
 
-        <!-- Education 栏目 -->
         <section id="education">
             <h2 class="section-title">Education</h2>
             <div class="block">
@@ -512,7 +507,6 @@
             </div>
         </section>
 
-        <!-- Publications 栏目 -->
         <section id="publications">
             <h2 class="section-title">Publications</h2>
             <div class="publication-item">
@@ -579,7 +573,6 @@
             </div>
         </section>
 
-        <!-- Activities 栏目 -->
         <section id="activities">
             <h2 class="section-title">Academic Activities</h2>
             <div class="publication-item">
@@ -648,7 +641,7 @@
             }, 100);
         });
 
-        // 滚动触发展示动画
+        // 滚动触发出展示动画
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
